@@ -4,12 +4,17 @@ const ecom = {
     add: (req, res) => {
         res.render('add');
     },
-
-
     index: (req, res) => {
         info.getallproducts((err, results) => {
             if (err) throw err;
             res.render('index', { information: results });
+        });
+    },
+
+    users: (req, res) => {
+        info.getallusers((err, results) => {
+            if (err) throw err;
+            res.render('users', { information: results });
         });
     },
 

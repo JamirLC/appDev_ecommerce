@@ -10,6 +10,11 @@ const information = {
         db.query(query, callback);
     },
 
+    getallusers: (callback) => {
+        const query = "SELECT * FROM users";
+        db.query(query, callback);
+    },
+
     //UPDATE
     getProductById: (prodID, callback) => {
         const query = "SELECT * FROM products WHERE prodID = ?";
@@ -20,7 +25,7 @@ const information = {
         const query = "UPDATE products SET prodname = ?, description = ?, price = ?, quantity = ? WHERE prodID = ?";
         db.query(query, [data.prodname, data.description, data.price, data.quantity, prodID], callback);
     },
-    
+
     // DELETE
     delete: (id, callback) => {
         const query = "DELETE FROM products WHERE prodID = ?";
