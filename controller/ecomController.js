@@ -1,14 +1,15 @@
 const information = require('../models/ecomModel');
 const info = require('../models/ecomModel');
 const jmski = {
-    index: (req, res) => {
-        res.render('index');
+    add: (req, res) => {
+        res.render('add');
     },
 
-    information: (req, res) => {
+
+    index: (req, res) => {
         info.getAll((err, results) => {
             if (err) throw err;
-            res.render('list', { information: results });
+            res.render('index', { information: results });
         });
     },
 

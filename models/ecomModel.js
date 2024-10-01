@@ -5,7 +5,7 @@ const information = {
 
         db.query(query, [data.fname, data.lname, data.age, data.address], callback);
     },
-    getAll: (callback) => { 
+    getAll: (callback) => {
         const query = "SELECT * FROM users";
         db.query(query, callback);
     }
