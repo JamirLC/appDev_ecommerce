@@ -19,7 +19,39 @@ const ecom = {
             if (err) throw err;
             res.redirect('/');
         });
+    },
+
+    // SHOW PRODUCT TO UPDATE //
+    showUpdateForm: (req, res) => {
+        const prodID = req.params.id;
+        information.getProductById(prodID, (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                res.render('update', { product: result[0] });
+            } else {
+                res.send('Product not found');
+            }
+        });
+    },
+    // UPDATE //
+    updateProduct: (req, res) => {
+        const prodID = req.params.id;
+        const updatedData = req.body;
+        information.update(prodID, updatedData, (err) => {
+            if (err) throw err;
+            res.redirect('/');
+        });
+    },
+
+    // DELETE //
+    deleteProduct: (req, res) => {
+        const productId = req.params.id;
+        information.delete(productId, (err) => {
+            if (err) throw err;
+            res.redirect('/');
+        });
     }
 };
+
 
 module.exports = ecom;
