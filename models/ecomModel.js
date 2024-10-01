@@ -1,12 +1,12 @@
 const db = require('../config/db');
 const information = {
-    save: (data, callback) => {
-        const query = "INSERT INTO users (fname, lname, age, address) values(?, ?, ?, ?)";
+    insert: (data, callback) => {
+        const query = "INSERT INTO products (prodname, description, price, quantity) values(?, ?, ?, ?)";
 
-        db.query(query, [data.fname, data.lname, data.age, data.address], callback);
+        db.query(query, [data.prodname, data.description, data.price, data.quantity], callback);
     },
-    getAll: (callback) => {
-        const query = "SELECT * FROM users";
+    getallproducts: (callback) => {
+        const query = "SELECT * FROM products";
         db.query(query, callback);
     }
 };

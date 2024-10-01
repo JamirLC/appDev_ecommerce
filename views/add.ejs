@@ -11,51 +11,49 @@
   </head>
   <body class="bg-light">
     <div class="container mt-5">
-      <h2 class="mb-4">User Information Form</h2>
-      <form action="/save" method="POST" class="p-4 bg-white shadow-sm rounded">
+      <h2 class="mb-4">Add Products</h2>
+      <form action="/insert" method="POST" class="p-4 bg-white shadow-sm rounded">
         <div class="mb-3">
-          <label for="fname" class="form-label">First Name</label>
+          <label for="fname" class="form-label">Product Name</label>
           <input
             type="text"
             class="form-control"
-            id="fname"
-            name="fname"
-            placeholder="Enter your first name"
+            id="prodname"
+            name="prodname"
+            placeholder="Enter Product Name"
             required
           />
         </div>
         <div class="mb-3">
-          <label for="lname" class="form-label">Last Name</label>
+          <label for="lname" class="form-label">Price</label>
           <input
             type="text"
             class="form-control"
-            id="lname"
-            name="lname"
-            placeholder="Enter your last name"
+            id="price"
+            name="price"
+            placeholder="Set a price"
             required
           />
         </div>
         <div class="mb-3">
-          <label for="age" class="form-label">Age</label>
+          <label for="age" class="form-label">Quantity</label>
           <input
             type="text"
             class="form-control"
-            id="age"
-            name="age"
-            placeholder="Enter your age"
+            id="quantity"
+            name="quantity"
+            placeholder="Set quantity"
             required
           />
         </div>
         <div class="mb-3">
-          <label for="address" class="form-label">Address</label>
-          <input
-            type="text"
+          <label for="address" class="form-label">Product Description</label>
+          <textarea
             class="form-control"
-            id="address"
-            name="address"
-            placeholder="Enter your address"
-            required
-          />
+            id="description"
+            name="description"
+            rows="3"
+            required></textarea>
         </div>
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-primary">Save</button>
