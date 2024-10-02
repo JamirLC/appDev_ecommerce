@@ -7,6 +7,9 @@ const ecom = {
     landingpage: (req, res) => {
         res.render('landingpage');
     },
+    addtocart: (req, res) => {
+        res.render('addtocart');
+    },
     index: (req, res) => {
         info.getallproducts((err, results) => {
             if (err) throw err;

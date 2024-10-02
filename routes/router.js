@@ -8,6 +8,7 @@ router.post('/insert', ecom.insert);
 router.get('/index', ecom.index);
 router.get('/users', ecom.users);
 router.get('/landingpage', ecom.landingpage);
+router.get('/addtocart', ecom.addtocart);
 
 router.get('/update/:id', ecom.showUpdateForm); // CALL/SHOW UPDATE FORM
 router.post('/update/:id', ecom.updateProduct); // SUBMIT THE UPDATED ATTRIBUTES
