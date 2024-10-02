@@ -62,9 +62,6 @@
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email</th>
-                  <th>Address</th>
-                  <th>Age</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -73,12 +70,6 @@
                   <td><%= info.fname %></td>
                   <td><%= info.lname %></td>
                   <td><%= info.email %></td>
-                  <td><%= info.address %></td>
-                  <td><%= info.age %></td>
-                  <td>
-                    <a href="/update/<%= info.prodID %>" class="btn btn-warning">Update</a>
-                    <a href="/delete/<%= info.prodID %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
-                  </td>
                 </tr>
                 <% }) %>
               </tbody>

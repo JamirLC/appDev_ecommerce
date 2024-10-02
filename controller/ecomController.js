@@ -4,6 +4,9 @@ const ecom = {
     add: (req, res) => {
         res.render('add');
     },
+    userhome: (req, res) => {
+        res.render('userproducts');
+    },
     index: (req, res) => {
         info.getallproducts((err, results) => {
             if (err) throw err;

@@ -7,6 +7,7 @@ router.get('/add', ecom.add);
 router.post('/insert', ecom.insert);
 router.get('/index', ecom.index);
 router.get('/users', ecom.users);
+router.get('/userhome', ecom.userhome);
 
 router.get('/update/:id', ecom.showUpdateForm); // CALL/SHOW UPDATE FORM
 router.post('/update/:id', ecom.updateProduct); // SUBMIT THE UPDATED ATTRIBUTES
