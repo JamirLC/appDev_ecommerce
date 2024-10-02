@@ -9,9 +9,18 @@ router.get('/index', ecom.index);
 router.get('/users', ecom.users);
 router.get('/landingpage', ecom.landingpage);
 
-router.get('/update/:id', ecom.showUpdateForm); // CALL/SHOW UPDATE FORM
-router.post('/update/:id', ecom.updateProduct); // SUBMIT THE UPDATED ATTRIBUTES
+////////// LOGIN & REGISTER //////////
+router.get('/login', ecom.showLoginForm);
+router.post('/login', ecom.loginUser);
+router.get('/register', ecom.showRegisterForm);
+router.post('/register', ecom.registerUser);
 
-router.get('/delete/:id', ecom.deleteProduct); // DELETE MO NA AGAD
+////////// UPDATE & DELETE //////////
+router.get('/update/:id', ecom.showUpdateForm);
+router.post('/update/:id', ecom.updateProduct);
+router.get('/delete/:id', ecom.deleteProduct);
+
+////////// LOGOUT //////////
+router.get('/logout', ecom.logoutUser);
 
 module.exports = router;

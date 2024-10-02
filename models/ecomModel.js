@@ -30,6 +30,20 @@ const information = {
     delete: (id, callback) => {
         const query = "DELETE FROM products WHERE prodID = ?";
         db.query(query, [id], callback);
+    },
+
+////////// USERS //////////
+
+    // REGISTER
+    register: (userData, callback) => {
+        const query = "INSERT INTO users (fname, lname, email, password, role) VALUES (?, ?, ?, ?, ?)";
+        db.query(query, [userData.fname, userData.lname, userData.email, userData.password, userData.role], callback);
+    },
+
+    // CHECK EMAIL
+    findByEmail: (email, callback) => {
+        const query = "SELECT * FROM users WHERE email = ?";
+        db.query(query, [email], callback);
     }
 };
 
