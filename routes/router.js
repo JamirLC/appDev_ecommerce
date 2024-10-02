@@ -8,6 +8,7 @@ router.post('/insert', ecom.insert);
 router.get('/index', ecom.index);
 router.get('/users', ecom.users);
 router.get('/landingpage', ecom.landingpage);
+router.get('/addtocart', ecom.addtocart);
 
 ////////// LOGIN & REGISTER //////////
 router.get('/login', ecom.showLoginForm);
