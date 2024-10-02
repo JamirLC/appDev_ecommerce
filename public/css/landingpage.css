@@ -1,0 +1,342 @@
+
+#nav
+{
+    background: rgb(255, 255, 255);
+    box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+                -6px -6px 10px -1px rgba(0,0,0,0.15);
+}
+
+.form-control
+{
+    color: #050a39;
+    
+}
+
+.form-control:focus,
+.form-control:hover
+{
+    border-color: #050a39;
+}
+
+body
+{
+    background-color: #dee1e4;
+}
+
+i , a
+{
+    color: #050a39;
+}
+
+/*---------------------------------------------------Side Bar-------------------------------------------------*/
+#side
+{
+    background: #FFFFFF;
+    min-width: 250px;
+    max-width: 30vh;
+    height: 100vh;
+    transition: all 0.3s;
+    margin-top: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+#side
+{
+    color: #050a39;
+}
+
+
+
+.content
+{
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+.nav-link,
+.nav-link:focus,
+.nav-link:hover
+{
+    color: #050a39;
+    
+}
+
+.nav-link:hover
+{   
+    color: #FFFFFF;
+    background: rgba(5, 10, 57, 0.90); ;
+    
+}
+
+.nav-link:hover i
+{   
+    color: #FFFFFF;
+}
+
+.form-check-input
+{
+    border: 1px solid #050a39;
+
+}
+
+.form-check-input:checked
+{
+    background-color: #050a39;
+    border: 1px solid #050a39;
+    box-shadow: none;
+}
+
+.form-check-input:focus
+{
+    border: 1px solid #050a39;
+    box-shadow: none;
+}
+
+@media(max-width: 767px)
+{
+    #side
+    {
+        position: absolute;
+        margin-left: -250px;
+        min-height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    #side.active
+    {
+        margin-left: 0;
+        min-height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+}
+
+
+.content
+{
+    margin-top: 50px;
+}
+
+
+@media(max-width: 767px)
+{
+    .content{
+    margin-left: 0px;
+    }
+}
+
+
+.container
+{
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+  
+  
+.img-con
+{
+    min-height: 20vh;
+    max-height: 50vh;
+    display: flex;
+    justify-content: center;
+}
+  
+.photo
+{
+    align-items: center;
+    justify-content: center !important;
+}
+  
+.carbut button
+{
+    z-index: 50;
+}
+
+.carousel-inner
+{
+    border: 1px solid;
+}
+  
+.carousel-caption p
+{
+    text-align: left;
+    font-size: 10px;
+}
+ 
+
+
+.carousel-caption button
+{
+    display: flex;
+    align-self: flex-start;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: none;
+    border: 1px solid #ffffff;
+    width: 16%;
+}
+
+.carousel-caption button:hover
+{
+    border-radius: 20px;
+    color: #000000;
+    background-color: #ffffff;
+    width: 16%;
+}
+
+@media(max-width: 767px)
+{
+
+    .carousel-caption button,
+    .carousel-caption button:hover
+{
+    width: 22%;
+    font-size: 8px;
+}
+    .carousel-caption p
+{
+    text-align: left;
+    font-size: 5px;
+}
+ 
+}
+
+
+
+/*---------------------------------------------------Post-------------------------------------------------*/
+
+.card {
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    transition: transform 0.4s ease;
+    color: #050a39; 
+  }
+
+
+  .box {
+    width: 40px;
+    height: 40px;
+    background: #050a39;
+    border-radius: 25px;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .arrow {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  
+  .right {
+    transform: rotate(-45deg);
+  }
+  
+  .box:hover {
+    width: 140px;
+    background: linear-gradient(to right, #232b74, #050a39);
+  }
+  
+  .box:hover .arrow {
+    display: none;
+  }
+  
+  .box .text {
+    display: none;
+  }
+  
+  .box:hover .text {
+    display: flex;
+    font-size: 16px;
+    font-weight: 550;
+    color: white;
+    letter-spacing: 0.6px;
+    animation: anima 0.6s ease;
+  }
+  
+  @keyframes anima {
+    0% {
+      opacity: 0;
+    }
+  
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .box:active {
+    background: linear-gradient(to right, #232b74, #050a39);
+  }
+  
+  @media(max-width: 767px)
+  {
+   
+    .card .text, i
+    {
+        font-size: 80%;
+    }   
+
+    .box {
+        width: 100px;
+        height: 35px;
+        border-radius: 60px;
+        font-size: 12px;
+      }
+
+      .box .arrow {
+        display: none;
+      }
+
+        .box .text,
+        .box:hover .text {
+        display: flex;
+        color: white;
+        letter-spacing: 0.6px;
+        animation: none;
+        font-size: 80%;
+        }
+
+        .box:hover {
+            width: 100px;
+            background: #050a39; 
+            
+        }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

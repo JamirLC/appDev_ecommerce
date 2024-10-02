@@ -4,8 +4,8 @@ const ecom = {
     add: (req, res) => {
         res.render('add');
     },
-    userhome: (req, res) => {
-        res.render('userproducts');
+    landingpage: (req, res) => {
+        res.render('landingpage');
     },
     index: (req, res) => {
         info.getallproducts((err, results) => {
