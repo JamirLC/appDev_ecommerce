@@ -14,14 +14,14 @@ const ecom = {
     index: (req, res) => {
         info.getallproducts((err, results) => {
             if (err) throw err;
-            res.render('index', { information: results });
+            res.render('index', { information: results, user: req.session.user });
         });
     },
 
     users: (req, res) => {
         info.getallusers((err, results) => {
             if (err) throw err;
-            res.render('users', { information: results });
+            res.render('users', { information: results, user: req.session.user });
         });
     },
 
@@ -29,86 +29,85 @@ const ecom = {
         const data = req.body;
         info.insert(data, (err) => {
             if (err) throw err;
-            res.redirect('/');
+            res.redirect('/index');
         });
     },
 
-    // SHOW PRODUCT TO UPDATE //
+    ///// SHOW PRODUCT TO UPDATE /////
     showUpdateForm: (req, res) => {
         const prodID = req.params.id;
         information.getProductById(prodID, (err, result) => {
             if (err) throw err;
             if (result.length > 0) {
-                res.render('update', { product: result[0] });
+                res.render('update', { product: result[0], user: req.session.user });
             } else {
                 res.send('Product not found');
             }
         });
     },
-    // UPDATE //
+    ///// UPDATE /////
     updateProduct: (req, res) => {
         const prodID = req.params.id;
         const updatedData = req.body;
         information.update(prodID, updatedData, (err) => {
             if (err) throw err;
-            res.redirect('/');
+            res.redirect('/index');
         });
     },
 
-    // DELETE //
+    ///// DELETE /////
     deleteProduct: (req, res) => {
         const productId = req.params.id;
         information.delete(productId, (err) => {
             if (err) throw err;
-            res.redirect('/');
+            res.redirect('/index');
         });
     },
 
 ////////// LOGIN & REGISTER //////////
 
-    // REGISTER FORM
+    ///// REGISTER FORM /////
     showRegisterForm: (req, res) => {
         const successMessage = req.session.successMessage || null;
         req.session.successMessage = null;
         res.render('register', { successMessage });
     },
 
-    // USER REGISTRATION
+    ///// USER REGISTRATION /////
     registerUser: (req, res) => {
         const data = req.body;
         const hashedPassword = bcrypt.hashSync(data.password, 10);
     
-        // Automatically set the role to 'user'
         const userData = {
             ...data,
             password: hashedPassword,
-            role: 'user' // Assign 'user' role by default
+            role: 'user'
         };
     
-        // INSERTING THE DATA TO DATABASE
+        ///// INSERTING THE DATA TO DATABASE /////
         information.register(userData, (err) => {
             if (err) {
                 console.error(err);
-                req.session.errorMessage = 'Error registering user'; // Set error message in session
-                return res.redirect('/register'); // Redirect to register page
+                req.session.errorMessage = 'Error registering user';
+                return res.redirect('/register'); 
             }
-            req.session.successMessage = 'Successfully registered!'; // Set success message in session
-            res.redirect('/register'); // Redirect to login page
+            req.session.successMessage = 'Successfully registered!';
+            res.redirect('/register'); 
         });
     },
 
-    // LOGIN FORM
+    ///// LOGIN FORM /////
     showLoginForm: (req, res) => {
         const errorMessage = req.session.errorMessage || null;
         req.session.errorMessage = null;
         res.render('login', { errorMessage });
-    },
+        },
 
-        // USER LOGIN
+        ///// USER LOGIN /////
         loginUser: (req, res) => {
         const { email, password } = req.body;
 
-        // MATCH EMAIL WITH DB
+        ///// MATCH EMAIL WITH DB /////
         information.findByEmail(email, (err, result) => {
             if (err) throw err;
             if (result.length === 0) {
@@ -117,12 +116,12 @@ const ecom = {
             
             const user = result[0];
 
-            // PASSWORD MATCHING
+            ///// PASSWORD MATCHING /////
             const isMatch = bcrypt.compareSync(password, user.password);
             if (isMatch) {
                 req.session.user = user;
                 
-                // LOGIN CONDITIONS
+                ///// LOGIN CONDITIONS /////
                 if (user.role === 'admin') {
                     res.redirect('/index'); // ADMIN = ADMIN PAGE
                 } else {
@@ -134,12 +133,13 @@ const ecom = {
         });
     },
 
-    //LOGOUT
+    ///// LOGOUT /////
     logoutUser: (req, res) => {
         req.session.destroy(() => {
             res.redirect('/login');
         });
     }
+
 };
 
 

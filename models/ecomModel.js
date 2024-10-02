@@ -15,7 +15,7 @@ const information = {
         db.query(query, callback);
     },
 
-    //UPDATE
+    ///// UPDATE /////
     getProductById: (prodID, callback) => {
         const query = "SELECT * FROM products WHERE prodID = ?";
         db.query(query, [prodID], callback);
@@ -26,7 +26,7 @@ const information = {
         db.query(query, [data.prodname, data.description, data.price, data.quantity, prodID], callback);
     },
 
-    // DELETE
+    ///// DELETE /////
     delete: (id, callback) => {
         const query = "DELETE FROM products WHERE prodID = ?";
         db.query(query, [id], callback);
@@ -34,13 +34,13 @@ const information = {
 
 ////////// USERS //////////
 
-    // REGISTER
+    ///// REGISTER /////
     register: (userData, callback) => {
         const query = "INSERT INTO users (fname, lname, email, password, role) VALUES (?, ?, ?, ?, ?)";
         db.query(query, [userData.fname, userData.lname, userData.email, userData.password, userData.role], callback);
     },
 
-    // CHECK EMAIL
+    ///// CHECK EMAIL /////
     findByEmail: (email, callback) => {
         const query = "SELECT * FROM users WHERE email = ?";
         db.query(query, [email], callback);

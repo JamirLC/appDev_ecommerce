@@ -22,15 +22,17 @@
           <nav class="sidebar py-2">
             <ul class="nav flex-column list-unstyled">
               <li class="nav-item">
-                <a class="nav-link text-light" href="/">
+                <a class="nav-link text-light" href="/index">
                   <i class="bi bi-person"></i> Products
                 </a>
               </li>
-              <li class="nav-item"></li>
-                <a class="nav-link text-light" href="/users">
-                  <i class="bi bi-person"></i> Users
-                </a>
-              </li>
+              <% if (user && user.role === 'admin') { %>
+                <li class="nav-item">
+                  <a class="nav-link text-light" href="/users">
+                    <i class="bi bi-person"></i> Users
+                  </a>
+                </li>
+              <% } %>
               <li class="nav-item">
                 <a class="nav-link text-light" href="/logout">
                   <i class="bi bi-box-arrow-right"></i> Log Out
@@ -54,10 +56,12 @@
           <div class="container-fluid mt-3">
             <h1 class="mb-4">Products</h1>
 
-            <!-- Create User Link -->
-            <a href="/add" class="btn btn-primary mb-3">Add Product</a>
+            <% if (user && user.role === 'admin') { %>
+              <!-- Create Product Link -->
+              <a href="/add" class="btn btn-primary mb-3">Add Product</a>
+            <% } %>
 
-            <!-- Table for user information -->
+            <!-- Table for product information -->
             <table class="table table-bordered table-striped">
               <thead class="table-dark">
                 <tr>
@@ -65,7 +69,9 @@
                   <th>Description</th>
                   <th>Price</th>
                   <th>Quantity</th>
-                  <th>Action</th>
+                  <% if (user && user.role === 'admin') { %>
+                    <th>Action</th>
+                  <% } %>
                 </tr>
               </thead>
               <tbody>
@@ -75,10 +81,12 @@
                   <td><%= info.description %></td>
                   <td><%= info.price %></td>
                   <td><%= info.quantity %></td>
-                  <td>
-                    <a href="/update/<%= info.prodID %>" class="btn btn-warning">Update</a>
-                    <a href="/delete/<%= info.prodID %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
-                  </td>
+                  <% if (user && user.role === 'admin') { %>
+                    <td>
+                      <a href="/update/<%= info.prodID %>" class="btn btn-warning">Update</a>
+                      <a href="/delete/<%= info.prodID %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                    </td>
+                  <% } %>
                 </tr>
                 <% }) %>
               </tbody>
