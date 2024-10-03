@@ -54,11 +54,18 @@
           <div class="container-fluid mt-3">
             <h1 class="mb-4">Users</h1>
 
+             <!-- Display Feedback Message -->
+                    <% if (message) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <%= message %>
+                        </div>
+                    <% } %>
+
             <div class="container-fluid mb-3">
                 <button class="btn d-md-none d-block open-btn px-1 py-0">
                     <i class="bi bi-list text-dark fs-1"></i>
                 </button>
-                <form class="d-flex ms-auto" action="/search" method="GET">
+                <form class="d-flex ms-auto" action="/search2" method="GET">
                     <input class="form-control me-2" type="search" name="query" placeholder="Search products" aria-label="Search" required />
                               <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>

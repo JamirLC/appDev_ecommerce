@@ -45,6 +45,7 @@ router.get('/users', isAdmin, ecom.users);
 
 ////////// SEARCH ROUTE //////////
 router.get('/search', checkAuth, isAdmin, ecom.search);
+router.get('/search2', checkAuth, isAdmin, ecom.search2);
 
 ////////// LOGIN & REGISTER //////////
 router.get('/login', ecom.showLoginForm);
