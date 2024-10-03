@@ -8,7 +8,10 @@ const ecom = {
         res.render('add');
     },
     landingpage: (req, res) => {
-        res.render('landingpage');
+        info.getallproducts((err, results) => {
+            if (err) throw err;
+            res.render('landingpage', { information: results, user: req.session.user });
+        });
     },
     addtocart: (req, res) => {
         res.render('addtocart');
@@ -19,6 +22,7 @@ const ecom = {
             res.render('index', { information: results, user: req.session.user });
         });
     },
+
 
     users: (req, res) => {
         info.getallusers((err, results) => {

@@ -20,8 +20,9 @@
             <a class="navbar-brand" href="#">ayoko paltan</a> <!--TODO:add link for the website-->     
           </div>
          <div>
-            <a href="/addtocart" class="me-4"><i class="bi bi-cart4 fs-3 m-3 text-dark"></i></i></a>
-            <a href="#" class="me-4"><i class="bi bi-person-circle fs-3 m-1 text-dark"></i></a> 
+            <a href="/addtocart" class="me-4"><i class="bi bi-cart4 fs-3  text-dark"></i></i></a>
+            <a href="#" class="me-4"><i class="bi bi-person-circle fs-3  text-dark"></i></a> 
+            <a href="/logout" class="me-4"><i class="bi bi-box-arrow-right fs-3 text-dark"></i></a> 
          </div>
         </div>
       </nav>
@@ -83,72 +84,22 @@
             </form>
                 <!----------------------Post-------------------------->
                     <div class="container mt-4">
+                       
                         <div class="row">
-
+                          <% information.forEach(info => { %>
                             <div class="col-md-3 mt-3">
                             <div class="card">
-                                <img src="images/war.jpg" class="card-img-top" alt="...">
+                                <img src="<%= info.filepath %>" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                <h5 class="card-title">Product Name</h5>
-                                <p class="card-text">$ 1000.00</p>
-                                <p class="card-text">10 stock</p>
+                                <h5 class="card-title"><%= info.prodname %></h5>
+                                <p class="card-text"><%= info.price %></p>
+                                <p class="card-text"><%= info.quantity %></p>
                                 <button class="add-to-cart-btn">Add to Cart</button>
                                 <button class="buy-btn">Buy</button>
                                 </div>
                             </div>
                             </div><!--end-->
-
-                            <div class="col-md-3  mt-3">
-                            <div class="card">
-                                <img src="images/war.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                <h5 class="card-title">Product Name</h5>
-                                <p class="card-text">$ 1000.00</p>
-                                <p class="card-text">10 stock</p>
-                                <button class="add-to-cart-btn">Add to Cart</button>
-                                <button class="buy-btn">Buy</button>
-                                </div>
-                            </div>
-                            </div><!--end-->
-
-                            <div class="col-md-3  mt-3">
-                            <div class="card">
-                                <img src="images/war.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                <h5 class="card-title">Product Name</h5>
-                                <p class="card-text">$ 1000.00</p>
-                                <p class="card-text">10 stock</p>
-                                <button class="add-to-cart-btn">Add to Cart</button>
-                                <button class="buy-btn">Buy</button>
-                                </div>
-                            </div>
-                            </div><!--end-->
-
-                            <div class="col-md-3  mt-3">
-                            <div class="card">
-                                <img src="images/war.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                <h5 class="card-title">Product Name</h5>
-                                <p class="card-text">$ 1000.00</p>
-                                <p class="card-text">10 stock</p>
-                                <button class="add-to-cart-btn">Add to Cart</button>
-                                <button class="buy-btn">Buy</button>
-                                </div>
-                            </div>
-                            </div><!--end-->
-
-                            <div class="col-md-3 mt-3">
-                            <div class="card">
-                                <img src="images/war.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                <h5 class="card-title">Product Name</h5>
-                                <p class="card-text">$ 1000.00</p>
-                                <p class="card-text">10 stock</p>
-                                <button class="add-to-cart-btn">Add to Cart</button>
-                                <button class="buy-btn">Buy</button>
-                                </div>
-                            </div>
-                            </div><!--end-->
+                        <% }) %>
                     </div>
                     </div> <!--container end-->
 

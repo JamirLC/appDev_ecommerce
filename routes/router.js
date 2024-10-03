@@ -43,6 +43,7 @@ router.get('/addtocart', ecom.addtocart);
 router.get('/index', isAdmin, ecom.index);
 router.get('/users', isAdmin, ecom.users);
 
+
 ////////// LOGIN & REGISTER //////////
 router.get('/login', ecom.showLoginForm);
 router.post('/login', ecom.loginUser);

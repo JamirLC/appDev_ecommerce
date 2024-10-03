@@ -174,9 +174,8 @@ body {
 
 /* Carousel Styling */
 .carousel-inner {
-    border: 1px solid #1e201e; /* Dark gray border */
+    border: 1px solid;
     border-radius: 10px;
-    overflow: hidden;
 }
 
 .carousel-caption p {
@@ -184,17 +183,21 @@ body {
     font-size: 14px;
 }
 
-.carousel-caption button {
+.carousel-caption button
+{
     border-radius: 20px;
-    border: 1px solid #ffffff;
     color: #ffffff;
-    background-color: gray; /* Gray button */
-    transition: 0.3s;
+    background-color: none;
+    border: 1px solid #ffffff;
+    width: 16%;
 }
 
-.carousel-caption button:hover {
-    background-color: #697565; /* Green hover */
-    color: #ffffff;
+.carousel-caption button:hover
+{
+    border-radius: 20px;
+    color: #000000;
+    background-color: #ffffff;
+    width: 16%;
 }
 
 /* Responsive Adjustments */
