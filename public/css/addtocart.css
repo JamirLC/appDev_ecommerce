@@ -1,88 +1,41 @@
-/* Body Styles */
-body {
-    background-color: #f8f9fa; /* Light background color for the entire page */
-    font-family: Arial, sans-serif; /* Default font family */
+/* Custom CSS to remove borders and padding between columns */
+.table th, .table td {
+    border: none;
 }
 
-/* Navbar Styles */
-#nav {
-    background-color: #343a40; /* Dark background for the navbar */
-    padding: 10px 20px; /* Padding for the navbar */
+/* Remove separation between columns */
+.table td, .table th {
+    vertical-align: middle;
+    padding: 0.75rem 0.5rem; /* Reduced padding to avoid column separation effect */
 }
 
-.navbar-brand {
-    color: #fff; /* White color for brand name */
-    font-weight: bold; /* Bold text for brand name */
+/* Image size and style */
+.table img {
+    width: 60px;
+    height: 60px;
+    background-color: #f0f0f0;
 }
 
-.cart-icon {
-    color: #fff; /* White color for cart icon */
+/* Styling for Remove button */
+.remove-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
 }
 
-/* Content Styles */
-.content {
-    margin-top: 80px; /* Space below the navbar */
-    text-align: center; /* Center text */
+.remove-btn:hover {
+    background-color: #ff3333;
 }
 
-.product-card {
-    margin: 20px 0; /* Space between product cards */
-    border-radius: 10px; /* Rounded corners for product cards */
-    transition: transform 0.3s; /* Smooth transform effect */
+/* Styling for Checkout button */
+.checkout-btn {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    padding: 10px 20px;
 }
 
-.product-card:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-/* Shopping Cart Styles */
-#cart-items {
-    max-height: 300px; /* Set a max height for the cart items */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
-    margin-bottom: 20px; /* Space below the cart items */
-}
-
-.list-group-item {
-    border: none; /* Remove border for cleaner look */
-    padding: 20px; /* Increased padding for comfort */
-    background-color: #fff; /* White background for list items */
-    font-size: 1.1rem; /* Slightly larger font for better readability */
-}
-
-.list-group-item .btn {
-    margin-left: auto; /* Push the remove button to the right */
-}
-
-.card {
-    border: 1px solid #dee2e6; /* Light border for cards */
-    border-radius: 8px; /* Rounded corners for cards */
-}
-
-/* Total Price Styles */
-.card-body h4 {
-    font-weight: bold; /* Bold text for total price */
-    font-size: 1.5rem; /* Increased font size for total price */
-}
-
-/* Button Styles */
-.btn-warning {
-    background-color: #ffc107; /* Bootstrap warning color */
-    color: #fff; /* White text color for buttons */
-    border-radius: 5px; /* Rounded corners for buttons */
-}
-
-/* Icon Styles */
-.bi-x-circle {
-    font-size: 1.2rem; /* Size of the delete icon */
-}
-
-/* Adjust for smaller screens */
-@media (max-width: 576px) {
-    .product-card {
-        width: 100%; /* Full width on small screens */
-    }
-
-    .navbar-brand {
-        font-size: 1.5rem; /* Larger brand name on small screens */
-    }
+.checkout-btn:hover {
+    background-color: #e64a19;
 }
