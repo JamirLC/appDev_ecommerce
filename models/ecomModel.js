@@ -1,7 +1,8 @@
+// models/ecomModel.js
 const db = require('../config/db');
 const information = {
     insert: (data, callback) => {
-        const query = "INSERT INTO products (prodname, description, price, quantity, filepath) values(?, ?, ?, ?, ?)";
+        const query = "INSERT INTO products (prodname, description, price, quantity, filepath) VALUES (?, ?, ?, ?, ?)";
         db.query(query, [data.prodname, data.description, data.price, data.quantity, data.filepath], callback);
     },
 
@@ -44,6 +45,30 @@ const information = {
     findByEmail: (email, callback) => {
         const query = "SELECT * FROM users WHERE email = ?";
         db.query(query, [email], callback);
+    },
+
+    ///// SEARCH PRODUCTS /////
+    searchProducts: (searchTerm, limit, offset, callback) => {
+        const query = `
+            SELECT * FROM products 
+            WHERE prodname LIKE ? 
+               OR description LIKE ?
+            ORDER BY prodname ASC
+            LIMIT ? OFFSET ?
+        `;
+        const likeTerm = `%${searchTerm}%`;
+        db.query(query, [likeTerm, likeTerm, limit, offset], callback);
+    },
+
+    ///// COUNT SEARCH RESULTS /////
+    countSearchResults: (searchTerm, callback) => {
+        const query = `
+            SELECT COUNT(*) AS count FROM products 
+            WHERE prodname LIKE ? 
+               OR description LIKE ?
+        `;
+        const likeTerm = `%${searchTerm}%`;
+        db.query(query, [likeTerm, likeTerm], callback);
     }
 };
 

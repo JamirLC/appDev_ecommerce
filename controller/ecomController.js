@@ -1,14 +1,14 @@
 const information = require('../models/ecomModel');
-const info = require('../models/ecomModel');
 const bcrypt = require('bcrypt'); // FOR PASSWORD ENCRYPTION
 const path = require('path');
 const fs = require('fs');
+
 const ecom = {
     add: (req, res) => {
         res.render('add');
     },
     landingpage: (req, res) => {
-        info.getallproducts((err, results) => {
+        information.getallproducts((err, results) => {
             if (err) throw err;
             res.render('landingpage', { information: results, user: req.session.user });
         });
@@ -17,15 +17,31 @@ const ecom = {
         res.render('addtocart');
     },
     index: (req, res) => {
-        info.getallproducts((err, results) => {
+        information.getallproducts((err, results) => {
             if (err) throw err;
-            res.render('index', { information: results, user: req.session.user });
+
+
+            const limit = 10;
+            const page = parseInt(req.query.page) || 1;
+            const totalResults = results.length;
+            const totalPages = Math.ceil(totalResults / limit);
+            const offset = (page - 1) * limit;
+
+            const paginatedResults = results.slice(offset, offset + limit);
+
+            res.render('index', {
+                information: paginatedResults,
+                user: req.session.user,
+                message: null,
+                currentPage: page,
+                totalPages: totalPages,
+                searchTerm: ''
+            });
         });
     },
 
-
     users: (req, res) => {
-        info.getallusers((err, results) => {
+        information.getallusers((err, results) => {
             if (err) throw err;
             res.render('users', { information: results, user: req.session.user });
         });
@@ -34,22 +50,19 @@ const ecom = {
     insert: (req, res) => {
         const data = req.body;
 
-        // Check if an image file is uploaded
         const file = req.file;
         let filepath = '';
 
         if (file) {
-            // It's better to store the relative path from the 'public' directory
-            filepath = `images/${file.filename}`;  // Remove 'public/' since 'public' is the static folder
+            filepath = `images/${file.filename}`;
         }
 
-        // Add filepath to data object to insert into database
         const productData = {
             ...data,
-            filepath: filepath  // Use 'filepath' instead of 'imagePath'
+            filepath: filepath
         };
 
-        info.insert(productData, (err) => {
+        information.insert(productData, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Server Error');
@@ -76,14 +89,13 @@ const ecom = {
         const prodID = req.params.id;
         const updatedData = req.body;
 
-        // Handle file upload
         const file = req.file;
         let newFilePath = '';
 
         if (file) {
-            newFilePath = `images/${file.filename}`; // Relative path from 'public' directory
+            newFilePath = `images/${file.filename}`;
 
-            // First, retrieve the existing product to get the old file path
+            //RETRIEVE THE EXISTING PRODUCT TO GET THE OLD FILE PATH
             information.getProductById(prodID, (err, result) => {
                 if (err) {
                     console.error(err);
@@ -95,7 +107,7 @@ const ecom = {
 
                 const oldFilePath = path.join(__dirname, '../public/', result[0].filepath);
 
-                // Update the product with the new file path
+                // UPDATE THE PRODUCT WITH THE NEW FILE PATH
                 const productData = {
                     ...updatedData,
                     filepath: newFilePath
@@ -107,12 +119,11 @@ const ecom = {
                         return res.status(500).send('Server Error');
                     }
 
-                    // Delete the old image file if it exists
+                    // DELETE THE OLD IMAGE FILE IF IT EXISTS
                     if (result[0].filepath) {
                         fs.unlink(oldFilePath, (err) => {
                             if (err) {
                                 console.error('Failed to delete old image:', err);
-                                // You might choose to handle this differently
                             }
                             res.redirect('/index');
                         });
@@ -122,7 +133,7 @@ const ecom = {
                 });
             });
         } else {
-            // If no new file is uploaded, retain the old file path
+            // IF NO NEW FILE IS UPLOADED, RETAIN THE OLD FILE PATH
             information.getProductById(prodID, (err, result) => {
                 if (err) {
                     console.error(err);
@@ -134,7 +145,7 @@ const ecom = {
 
                 const productData = {
                     ...updatedData,
-                    filepath: result[0].filepath // Keep existing filepath
+                    filepath: result[0].filepath
                 };
 
                 information.update(prodID, productData, (err) => {
@@ -226,14 +237,51 @@ const ecom = {
         });
     },
 
+    ///// SEARCH FUNCTIONALITY /////
+    search: (req, res) => {
+        const searchTerm = req.query.query ? req.query.query.trim() : '';
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10;
+        const offset = (page - 1) * limit;
+
+        if (!searchTerm) {
+            return res.redirect('/index');
+        }
+
+
+        information.searchProducts(searchTerm, limit, offset, (err, results) => {
+            if (err) {
+                console.error('Error during search:', err);
+                return res.status(500).send('Server Error');
+            }
+
+            information.countSearchResults(searchTerm, (countErr, countResult) => {
+                if (countErr) {
+                    console.error('Error counting search results:', countErr);
+                    return res.status(500).send('Server Error');
+                }
+
+                const totalResults = countResult[0].count;
+                const totalPages = Math.ceil(totalResults / limit);
+
+                res.render('index', {
+                    information: results,
+                    user: req.session.user,
+                    message: results.length === 0 ? 'No products found matching your search.' : null,
+                    currentPage: page,
+                    totalPages: totalPages,
+                    searchTerm: searchTerm
+                });
+            });
+        });
+    },
+
     ///// LOGOUT /////
     logoutUser: (req, res) => {
         req.session.destroy(() => {
             res.redirect('/login');
         });
     }
-
 };
-
 
 module.exports = ecom;

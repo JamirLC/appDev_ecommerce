@@ -6,20 +6,20 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Define storage for multer
+// STORAGE FOR MULTER
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/images');  // Directory where images will be stored
+        cb(null, 'public/images');
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Rename file with current timestamp
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 });
 
-// Initialize upload middleware
+//MIDDLEWARE
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 1000000 }, // Set file size limit (1MB here)
+    limits: { fileSize: 1000000 }, //(1MB here)
     fileFilter: (req, file, cb) => {
         const filetypes = /jpeg|jpg|png|gif/;
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -43,6 +43,8 @@ router.get('/addtocart', ecom.addtocart);
 router.get('/index', isAdmin, ecom.index);
 router.get('/users', isAdmin, ecom.users);
 
+////////// SEARCH ROUTE //////////
+router.get('/search', checkAuth, isAdmin, ecom.search);
 
 ////////// LOGIN & REGISTER //////////
 router.get('/login', ecom.showLoginForm);
