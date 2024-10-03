@@ -1,6 +1,8 @@
 const information = require('../models/ecomModel');
 const info = require('../models/ecomModel');
 const bcrypt = require('bcrypt'); // FOR PASSWORD ENCRYPTION
+const path = require('path');
+const fs = require('fs');
 const ecom = {
     add: (req, res) => {
         res.render('add');
@@ -27,11 +29,31 @@ const ecom = {
 
     insert: (req, res) => {
         const data = req.body;
-        info.insert(data, (err) => {
-            if (err) throw err;
+
+        // Check if an image file is uploaded
+        const file = req.file;
+        let filepath = '';
+
+        if (file) {
+            // It's better to store the relative path from the 'public' directory
+            filepath = `images/${file.filename}`;  // Remove 'public/' since 'public' is the static folder
+        }
+
+        // Add filepath to data object to insert into database
+        const productData = {
+            ...data,
+            filepath: filepath  // Use 'filepath' instead of 'imagePath'
+        };
+
+        info.insert(productData, (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Server Error');
+            }
             res.redirect('/index');
         });
     },
+
 
     ///// SHOW PRODUCT TO UPDATE /////
     showUpdateForm: (req, res) => {
@@ -64,7 +86,7 @@ const ecom = {
         });
     },
 
-////////// LOGIN & REGISTER //////////
+    ////////// LOGIN & REGISTER //////////
 
     ///// REGISTER FORM /////
     showRegisterForm: (req, res) => {
@@ -77,22 +99,22 @@ const ecom = {
     registerUser: (req, res) => {
         const data = req.body;
         const hashedPassword = bcrypt.hashSync(data.password, 10);
-    
+
         const userData = {
             ...data,
             password: hashedPassword,
             role: 'user'
         };
-    
+
         ///// INSERTING THE DATA TO DATABASE /////
         information.register(userData, (err) => {
             if (err) {
                 console.error(err);
                 req.session.errorMessage = 'Error registering user';
-                return res.redirect('/register'); 
+                return res.redirect('/register');
             }
             req.session.successMessage = 'Successfully registered!';
-            res.redirect('/register'); 
+            res.redirect('/register');
         });
     },
 
@@ -101,10 +123,10 @@ const ecom = {
         const errorMessage = req.session.errorMessage || null;
         req.session.errorMessage = null;
         res.render('login', { errorMessage });
-        },
+    },
 
-        ///// USER LOGIN /////
-        loginUser: (req, res) => {
+    ///// USER LOGIN /////
+    loginUser: (req, res) => {
         const { email, password } = req.body;
 
         ///// MATCH EMAIL WITH DB /////
@@ -113,14 +135,14 @@ const ecom = {
             if (result.length === 0) {
                 return res.render('login', { errorMessage: 'User not found' });
             }
-            
+
             const user = result[0];
 
             ///// PASSWORD MATCHING /////
             const isMatch = bcrypt.compareSync(password, user.password);
             if (isMatch) {
                 req.session.user = user;
-                
+
                 ///// LOGIN CONDITIONS /////
                 if (user.role === 'admin') {
                     res.redirect('/index'); // ADMIN = ADMIN PAGE

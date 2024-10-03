@@ -1,10 +1,10 @@
 const db = require('../config/db');
 const information = {
     insert: (data, callback) => {
-        const query = "INSERT INTO products (prodname, description, price, quantity) values(?, ?, ?, ?)";
-
-        db.query(query, [data.prodname, data.description, data.price, data.quantity], callback);
+        const query = "INSERT INTO products (prodname, description, price, quantity, filepath) values(?, ?, ?, ?, ?)";
+        db.query(query, [data.prodname, data.description, data.price, data.quantity, data.filepath], callback);
     },
+
     getallproducts: (callback) => {
         const query = "SELECT * FROM products";
         db.query(query, callback);
@@ -22,7 +22,7 @@ const information = {
     },
 
     update: (prodID, data, callback) => {
-        const query = "UPDATE products SET prodname = ?, description = ?, price = ?, quantity = ? WHERE prodID = ?";
+        const query = "UPDATE products SET prodname = ?, description = ?, price = ?, quantity = ?, filepath = ? WHERE prodID = ?";
         db.query(query, [data.prodname, data.description, data.price, data.quantity, prodID], callback);
     },
 
@@ -32,7 +32,7 @@ const information = {
         db.query(query, [id], callback);
     },
 
-////////// USERS //////////
+    ////////// USERS //////////
 
     ///// REGISTER /////
     register: (userData, callback) => {
