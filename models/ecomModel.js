@@ -23,7 +23,7 @@ const information = {
 
     update: (prodID, data, callback) => {
         const query = "UPDATE products SET prodname = ?, description = ?, price = ?, quantity = ?, filepath = ? WHERE prodID = ?";
-        db.query(query, [data.prodname, data.description, data.price, data.quantity, prodID], callback);
+        db.query(query, [data.prodname, data.description, data.price, data.quantity, data.filepath, prodID], callback);
     },
 
     ///// DELETE /////

@@ -71,10 +71,77 @@ const ecom = {
     updateProduct: (req, res) => {
         const prodID = req.params.id;
         const updatedData = req.body;
-        information.update(prodID, updatedData, (err) => {
-            if (err) throw err;
-            res.redirect('/index');
-        });
+
+        // Handle file upload
+        const file = req.file;
+        let newFilePath = '';
+
+        if (file) {
+            newFilePath = `images/${file.filename}`; // Relative path from 'public' directory
+
+            // First, retrieve the existing product to get the old file path
+            information.getProductById(prodID, (err, result) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send('Server Error');
+                }
+                if (result.length === 0) {
+                    return res.status(404).send('Product not found');
+                }
+
+                const oldFilePath = path.join(__dirname, '../public/', result[0].filepath);
+
+                // Update the product with the new file path
+                const productData = {
+                    ...updatedData,
+                    filepath: newFilePath
+                };
+
+                information.update(prodID, productData, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send('Server Error');
+                    }
+
+                    // Delete the old image file if it exists
+                    if (result[0].filepath) {
+                        fs.unlink(oldFilePath, (err) => {
+                            if (err) {
+                                console.error('Failed to delete old image:', err);
+                                // You might choose to handle this differently
+                            }
+                            res.redirect('/index');
+                        });
+                    } else {
+                        res.redirect('/index');
+                    }
+                });
+            });
+        } else {
+            // If no new file is uploaded, retain the old file path
+            information.getProductById(prodID, (err, result) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send('Server Error');
+                }
+                if (result.length === 0) {
+                    return res.status(404).send('Product not found');
+                }
+
+                const productData = {
+                    ...updatedData,
+                    filepath: result[0].filepath // Keep existing filepath
+                };
+
+                information.update(prodID, productData, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send('Server Error');
+                    }
+                    res.redirect('/index');
+                });
+            });
+        }
     },
 
     ///// DELETE /////

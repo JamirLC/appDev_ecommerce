@@ -12,50 +12,33 @@
 <body class="bg-light">
   <div class="container mt-5">
     <h2 class="mb-4">Update Product</h2>
-    <form action="/update/<%= product.prodID %>" method="POST" class="p-4 bg-white shadow-sm rounded">
+    <form action="/update/<%= product.prodID %>" method="POST" enctype="multipart/form-data" class="p-4 bg-white shadow-sm rounded">
       <div class="mb-3">
-        <label for="prodname" class="form-label">Product Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="prodname"
-          name="prodname"
-          value="<%= product.prodname %>"
-          required
-        />
+          <label for="prodname" class="form-label">Product Name</label>
+          <input type="text" class="form-control" id="prodname" name="prodname" value="<%= product.prodname %>" required />
       </div>
       <div class="mb-3">
-        <label for="price" class="form-label">Price</label>
-        <input
-          type="text"
-          class="form-control"
-          id="price"
-          name="price"
-          value="<%= product.price %>"
-          required
-        />
+          <label for="price" class="form-label">Price</label>
+          <input type="text" class="form-control" id="price" name="price" value="<%= product.price %>" required />
       </div>
       <div class="mb-3">
-        <label for="quantity" class="form-label">Quantity</label>
-        <input
-          type="text"
-          class="form-control"
-          id="quantity"
-          name="quantity"
-          value="<%= product.quantity %>"
-          required
-        />
+          <label for="quantity" class="form-label">Quantity</label>
+          <input type="text" class="form-control" id="quantity" name="quantity" value="<%= product.quantity %>" required />
       </div>
       <div class="mb-3">
-        <label for="description" class="form-label">Product Description</label>
-        <textarea
-          class="form-control"
-          id="description"
-          name="description"
-          rows="3"
-          required><%= product.description %></textarea>
+          <label for="description" class="form-label">Product Description</label>
+          <textarea class="form-control" id="description" name="description" rows="3" required><%= product.description %></textarea>
       </div>
-      <div class="d-flex justify-content-between">
+      <div class="mb-3">
+          <label for="image" class="form-label">Product Image</label>
+          <input type="file" class="form-control" id="image" name="image" accept="image/*" />
+           <% if (product.filepath) { %>
+          <div class="mt-2">
+            <img src="/<%= product.filepath %>" alt="<%= product.prodname %>" width="150" />
+          </div>
+           <% } %>
+      </div>
+       <div class="d-flex justify-content-between">
         <button type="submit" class="btn btn-primary">Update Product</button>
         <a href="/index" type="button" class="btn btn-danger">Back to List</a>
       </div>

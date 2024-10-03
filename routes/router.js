@@ -4,6 +4,7 @@ const ecom = require('../controller/ecomController');
 const { isAdmin, checkAuth } = require('../middleware');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // Define storage for multer
 const storage = multer.diskStorage({
@@ -50,6 +51,7 @@ router.post('/register', ecom.registerUser);
 
 ////////// UPDATE & DELETE //////////
 router.get('/update/:id', checkAuth, isAdmin, ecom.showUpdateForm);
+// router.post('/update/:id', checkAuth, isAdmin, ecom.updateProduct);
 router.post('/update/:id', checkAuth, isAdmin, upload.single('image'), ecom.updateProduct);
 router.get('/delete/:id', checkAuth, isAdmin, ecom.deleteProduct);
 
