@@ -20,82 +20,168 @@
                 <a class="navbar-brand" href="#">paltan mo</a>
             </div>
             <div>
-                <a href="#" class="cart-icon">
+                <a href="#!" class="cart-icon">
                     <i class="bi bi-cart4 fs-3 m-3"></i>
                     <span id="cart-count" class="badge bg-danger">0</span>
                 </a>
-                <a href="#" class="me-4"><i class="bi bi-person-circle fs-3 m-1"></i></a>
+                <a href="#!" class="me-4"><i class="bi bi-person-circle fs-3 m-1"></i></a>
             </div>
         </div>
     </nav>
 
     <!-- Content -->
     <div class="content d-flex align-items-center justify-content-center flex-column">
-        <h1>Our Best Products</h1>
-        <p>Discover high-quality items for you</p>
+      <h1>Our Best Products</h1>
+      <p>Discover high-quality items for you</p>
 
-        <!-- Product Card -->
-        <div class="card product-card" style="width: 18rem;">
-            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
-            <div class="card-body">
-                <h5 class="card-title">Product Name</h5>
-                <p class="card-text">$49.99</p>
-                <button class="btn add-to-cart-btn" onclick="addToCart('Product Name', 49.99)">Add to Cart</button>
+      <!-- Product Card -->
+      <div class="card product-card" style="width: 18rem;">
+          <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
+          <div class="card-body">
+              <h5 class="card-title">Product Name</h5>
+              <p class="card-text">$49.99</p>
+              <button class="btn add-to-cart-btn" onclick="addToCart('Product Name', 49.99)">Add to Cart</button>
+          </div>
+      </div>
+  </div>
+    
+    <section class="h-100">
+      <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-10">
+            <!-- Header and sorting options -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="fw-normal mb-0">Shopping Cart</h3>
+              <div>
+                <p class="mb-0"><span class="text-muted">Sort by:</span> 
+                  <a href="#!" class="text-body">price <i class="fas fa-angle-down mt-1"></i></a>
+                </p>
+              </div>
             </div>
-        </div>
-    </div>
+    
+            <!-- Cart Items -->
+            <ul id="cart-items" class="list-group mb-4"></ul>
 
-    <!-- Cart Items Display -->
-    <div class="cart-items-container">
-        <h2>Your Cart</h2>
-        <ul id="cart-items-list" class="list-group">
-            <!-- Cart items will be displayed here -->
-        </ul>
-        <div class="total-price mt-3">
-            <strong>Total: $<span id="total-price">0.00</span></strong>
+            <!-- Total Price -->
+            <div class="card mb-4">
+              <div class="card-body p-4">
+                <h4 class="text-right">Total: $<span id="total-price">0.00</span></h4>
+              </div>
+            </div>
+    
+            <!-- Proceed to payment -->
+            <div class="card">
+              <div class="card-body">
+                <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+      </div>
+    </section>
+    
+    <!-- JavaScript for Cart Functionality -->
     <script>
-        // JavaScript to handle cart functionality
-        let cart = [];
-        let totalPrice = 0;
+      let cart = [];
+      let totalPrice = 0;
 
-        function addToCart(productName, price) {
-            // Update cart count
-            cart.push({ productName, price });
-            document.getElementById('cart-count').innerText = cart.length;
+      function addToCart(productName, price) {
+          // Check if the product is already in the cart
+          const existingProductIndex = cart.findIndex(item => item.productName === productName);
+          if (existingProductIndex > -1) {
+              // Increase quantity if product exists
+              cart[existingProductIndex].quantity += 1;
+          } else {
+              // Add new product to cart
+              cart.push({ productName, price, quantity: 1 });
+          }
 
-            // Update total price
-            totalPrice += price;
-            document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+          // Update cart count
+          document.getElementById('cart-count').innerText = cart.length;
 
-            // Display cart items
-            const cartItemsList = document.getElementById('cart-items-list');
-            const listItem = document.createElement('li');
-            listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-            listItem.innerHTML = `
-                ${productName} - $${price.toFixed(2)}
-                <button class="btn btn-sm btn-danger" onclick="removeFromCart('${productName}', ${price}, this)">Remove</button>
-            `;
-            cartItemsList.appendChild(listItem);
-        }
+          // Update total price
+          updateTotalPrice();
 
-        function removeFromCart(productName, price, element) {
-            // Remove item from cart
-            cart = cart.filter(item => item.productName !== productName);
+          // Display cart items
+          displayCartItems();
+      }
 
-            // Update cart count and total price
-            document.getElementById('cart-count').innerText = cart.length;
-            totalPrice -= price;
-            document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+      function displayCartItems() {
+          const cartItemsList = document.getElementById('cart-items');
+          cartItemsList.innerHTML = ''; // Clear existing items
 
-            // Remove item from the cart display
-            element.parentElement.remove();
-        }
-    </script>
+          cart.forEach((item, index) => {
+              const listItem = document.createElement('li');
+              listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'p-4'); // Increased padding
+              listItem.innerHTML = `
+                  <div class="d-flex justify-content-between w-100">
+                      <span>${item.productName}</span>
+                      <div>
+                          <span class="me-3">$${item.price.toFixed(2)}</span>
+                          <button class="btn btn-sm btn-secondary me-1" onclick="changeQuantity(${index}, -1)">-</button>
+                          <span>${item.quantity}</span>
+                          <button class="btn btn-sm btn-secondary me-1" onclick="changeQuantity(${index}, 1)">+</button>
+                          <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
+                              <i class="bi bi-trash"></i>
+                          </button>
+                      </div>
+                  </div>
+              `;
+              cartItemsList.appendChild(listItem);
+          });
+      }
+
+      // Function to change the quantity of an item in the cart
+      function changeQuantity(index, delta) {
+          if (index > -1) {
+              const item = cart[index];
+              if (delta === 1) {
+                  // Increase quantity
+                  item.quantity += 1;
+              } else if (delta === -1 && item.quantity > 1) {
+                  // Decrease quantity only if greater than 1
+                  item.quantity -= 1;
+              } else if (delta === -1 && item.quantity === 1) {
+                  // Remove item from cart if quantity is 1
+                  cart.splice(index, 1);
+              }
+
+              // Update cart count
+              document.getElementById('cart-count').innerText = cart.length;
+
+              // Update total price
+              updateTotalPrice();
+
+              // Display updated cart items
+              displayCartItems();
+          }
+      }
+
+      // Function to remove an item from the cart
+      function removeFromCart(index) {
+          if (index > -1) {
+              cart.splice(index, 1); // Remove item from cart
+              document.getElementById('cart-count').innerText = cart.length; // Update cart count
+
+              // Update total price
+              updateTotalPrice();
+
+              // Display updated cart items
+              displayCartItems();
+          }
+      }
+
+      // Function to update the total price
+      function updateTotalPrice() {
+          totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+          document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+      }
+
+      // Initialize total price on page load
+      document.addEventListener('DOMContentLoaded', () => {
+          document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+      });
+    </script>    
 
 </body>
 </html>

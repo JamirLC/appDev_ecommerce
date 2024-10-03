@@ -1,109 +1,88 @@
-/* General styles */
+/* Body Styles */
 body {
-    background-color: #f8f9fa;
-    font-family: 'Arial', sans-serif;
-    margin-top: 60px;
+    background-color: #f8f9fa; /* Light background color for the entire page */
+    font-family: Arial, sans-serif; /* Default font family */
 }
 
-/* Navbar styling */
+/* Navbar Styles */
 #nav {
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
+    background-color: #343a40; /* Dark background for the navbar */
+    padding: 10px 20px; /* Padding for the navbar */
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #343a40;
-    text-transform: uppercase;
-}
-
-#nav .bi {
-    color: #343a40;
-    cursor: pointer;
+    color: #fff; /* White color for brand name */
+    font-weight: bold; /* Bold text for brand name */
 }
 
 .cart-icon {
-    position: relative;
+    color: #fff; /* White color for cart icon */
 }
 
-#cart-count {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    padding: 5px 10px;
-    border-radius: 50%;
-    font-size: 0.75rem;
-}
-
-/* Content area */
+/* Content Styles */
 .content {
-    min-height: calc(100vh - 60px);
-    text-align: center;
-    padding: 40px;
+    margin-top: 80px; /* Space below the navbar */
+    text-align: center; /* Center text */
 }
 
-.content h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+.product-card {
+    margin: 20px 0; /* Space between product cards */
+    border-radius: 10px; /* Rounded corners for product cards */
+    transition: transform 0.3s; /* Smooth transform effect */
 }
 
-.content p {
-    font-size: 1.25rem;
-    margin-bottom: 30px;
+.product-card:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
-/* Add to cart button */
-.add-to-cart-btn {
-    background-color: #28a745;
-    color: white;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    padding: 10px 30px;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease;
-}
-
-.add-to-cart-btn:hover {
-    background-color: #218838;
-}
-
-/* Cart items section */
-.cart-items-container {
-    margin: 30px auto;
-    width: 60%;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: left;
-}
-
-.cart-items-container h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+/* Shopping Cart Styles */
+#cart-items {
+    max-height: 300px; /* Set a max height for the cart items */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    margin-bottom: 20px; /* Space below the cart items */
 }
 
 .list-group-item {
-    background-color: #f8f9fa;
+    border: none; /* Remove border for cleaner look */
+    padding: 20px; /* Increased padding for comfort */
+    background-color: #fff; /* White background for list items */
+    font-size: 1.1rem; /* Slightly larger font for better readability */
 }
 
-.total-price {
-    font-size: 1.5rem;
+.list-group-item .btn {
+    margin-left: auto; /* Push the remove button to the right */
 }
 
-@media (max-width: 768px) {
-    .content h1 {
-        font-size: 2.5rem;
+.card {
+    border: 1px solid #dee2e6; /* Light border for cards */
+    border-radius: 8px; /* Rounded corners for cards */
+}
+
+/* Total Price Styles */
+.card-body h4 {
+    font-weight: bold; /* Bold text for total price */
+    font-size: 1.5rem; /* Increased font size for total price */
+}
+
+/* Button Styles */
+.btn-warning {
+    background-color: #ffc107; /* Bootstrap warning color */
+    color: #fff; /* White text color for buttons */
+    border-radius: 5px; /* Rounded corners for buttons */
+}
+
+/* Icon Styles */
+.bi-x-circle {
+    font-size: 1.2rem; /* Size of the delete icon */
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 576px) {
+    .product-card {
+        width: 100%; /* Full width on small screens */
     }
 
-    .content p {
-        font-size: 1.1rem;
-    }
-
-    .cart-items-container {
-        width: 90%;
+    .navbar-brand {
+        font-size: 1.5rem; /* Larger brand name on small screens */
     }
 }
