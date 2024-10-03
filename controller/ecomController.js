@@ -336,6 +336,19 @@ const ecom = {
         req.session.destroy(() => {
             res.redirect('/login');
         });
+    },
+
+    addtocart: (req, res) => {
+        information.getallproducts((err, products) => {
+            if (err) throw err;
+            res.render('addtocart', { products: products });
+        });
+    },
+    
+    checkout: (req, res) => {
+        const { productIds, quantities } = req.body; // Assuming you use arrays to capture these
+        // Logic to handle the checkout process, e.g., calculate totals, save to the database, etc.
+        res.redirect('/checkout-success'); // Redirect to a success page after processing
     }
 };
 

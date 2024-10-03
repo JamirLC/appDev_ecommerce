@@ -7,36 +7,35 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/landingpage.css">
     <link rel="stylesheet" href="css/addtocart.css">
-    <title>Homepage</title>
-  </head>
-  <body>
-  
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg fixed-top" id="nav">
-          <div class="container-fluid">
-              <div class="d-flex justify-content-between">
-                  <button class="btn d-md-none d-block open-btn px-1 py-0">
-                      <i class="bi bi-list text-dark fs-1"></i>
-                  </button>
-                  <a class="navbar-brand" href="#">paltan mo</a>
-              </div>
-              <div>
-                  <a href="#" class="cart-icon">
-                      <i class="bi bi-cart4 fs-3 m-3"></i>
-                      <span id="cart-count" class="badge bg-danger">0</span>
-                  </a>
-                  <a href="#" class="me-4"><i class="bi bi-person-circle fs-3 m-1"></i></a>
-              </div>
-          </div>
-      </nav>
-  
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="nav">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between">
+                <button class="btn d-md-none d-block open-btn px-1 py-0">
+                    <i class="bi bi-list text-dark fs-1"></i>
+                </button>
+                <a class="navbar-brand" href="/landingpage">Homepage</a>
+            </div>
+            <div>
+                <a href="#" class="cart-icon">
+                    <i class="bi bi-cart4 fs-3 m-3"></i>
+                    <span id="cart-count" class="badge bg-danger">0</span>
+                </a>
+                <a href="#" class="me-4"><i class="bi bi-person-circle fs-3 m-1"></i></a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-5">
         <h2 class="text-center mb-4">Shopping Cart</h2>
-        <form id="cart-form">
+        <form id="cart-form" method="POST" action="/checkout">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                        <th scope="col"><input class="form-check-input" type="checkbox" id="select-all"></th>
                         <th scope="col">Item</th>
                         <th scope="col">Price</th>
                         <th scope="col">Quantity</th>
@@ -45,32 +44,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><input class="form-check-input" type="checkbox"></td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="https://via.placeholder.com/60x60" alt="Product 1" class="me-3">
-                                <span>Product 1</span>
-                            </div>
-                        </td>
-                        <td class="text-danger">$10.00</td>
-                        <td><input class="form-control" type="number" value="1" min="1" style="width: 70px;"></td>
-                        <td class="text-danger">$10.00</td>
-                        <td><button class="btn remove-btn" type="button">Remove</button></td>
-                    </tr>
-                    <tr>
-                        <td><input class="form-check-input" type="checkbox"></td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="https://via.placeholder.com/60x60" alt="Product 2" class="me-3">
-                                <span>Product 2</span>
-                            </div>
-                        </td>
-                        <td class="text-danger">$15.00</td>
-                        <td><input class="form-control" type="number" value="1" min="1" style="width: 70px;"></td>
-                        <td class="text-danger">$15.00</td>
-                        <td><button class="btn remove-btn" type="button">Remove</button></td>
-                    </tr>
+                    <% products.forEach(product => { %>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox" name="productIds" value="<%= product.prodID %>"></td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="<%= product.filepath %>" alt="<%= product.prodname %>" class="me-3" style="width: 60px; height: 60px;">
+                                    <span><%= product.prodname %></span>
+                                </div>
+                            </td>
+                            <td class="text-danger">$<%= product.price.toFixed(2) %></td>
+                            <td>
+                                <input class="form-control" type="number" name="quantity" value="1" min="1" style="width: 70px;">
+                            </td>
+                            <td class="text-danger">$<%= product.price.toFixed(2) %></td>
+                            <td><button class="btn remove-btn" type="button">Remove</button></td>
+                        </tr>
+                    <% }); %>
                 </tbody>
             </table>
             <div class="d-flex justify-content-end">
@@ -85,9 +75,10 @@
         // Inline JavaScript for functionality
         document.addEventListener('DOMContentLoaded', function () {
             const removeBtns = document.querySelectorAll('.remove-btn');
-            const quantityInputs = document.querySelectorAll('input[type="number"]');
+            const quantityInputs = document.querySelectorAll('input[name="quantity"]');
             const priceCells = document.querySelectorAll('td:nth-child(3)');
             const totalCells = document.querySelectorAll('td:nth-child(5)');
+            const selectAllCheckbox = document.getElementById('select-all');
 
             // Update total price when quantity changes
             quantityInputs.forEach((input, index) => {
@@ -99,9 +90,17 @@
             });
 
             // Remove product from cart
-            removeBtns.forEach((btn, index) => {
+            removeBtns.forEach((btn) => {
                 btn.addEventListener('click', function () {
-                    btn.parentElement.parentElement.remove();
+                    btn.closest('tr').remove();
+                });
+            });
+
+            // Select all checkboxes
+            selectAllCheckbox.addEventListener('change', function () {
+                const checkboxes = document.querySelectorAll('input[name="productIds"]');
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = selectAllCheckbox.checked;
                 });
             });
         });

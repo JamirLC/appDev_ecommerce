@@ -38,6 +38,7 @@ router.get('/add', checkAuth, ecom.add);
 router.post('/insert', checkAuth, upload.single('image'), ecom.insert);
 router.get('/landingpage', ecom.landingpage);
 router.get('/addtocart', ecom.addtocart);
+router.post('/checkout', checkAuth, ecom.checkout);
 
 /////////// ADMIN ROUTES //////////
 router.get('/index', isAdmin, ecom.index);
@@ -61,5 +62,22 @@ router.get('/delete/:id', checkAuth, isAdmin, ecom.deleteProduct);
 
 ////////// LOGOUT //////////
 router.get('/logout', ecom.logoutUser);
+
+router.post('/add-to-cart', (req, res) => {
+    const { prodID, price, quantity } = req.body;
+    const userID = req.session.userID; // Assuming you have session management
+
+    // Generate a unique cartID (you can change this logic based on your needs)
+    const cartID = Date.now();
+
+    const query = 'INSERT INTO cart (cartID, userID, prodID, quantity, price) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [cartID, userID, prodID, quantity, price], (err, result) => {
+        if (err) {
+            console.error('Error adding product to cart:', err);
+            return res.status(500).json({ message: 'Error adding product to cart' });
+        }
+        res.status(200).json({ message: 'Product added to cart' });
+    });
+});
 
 module.exports = router;
