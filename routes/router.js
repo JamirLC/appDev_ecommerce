@@ -39,7 +39,20 @@ router.post('/insert', checkAuth, upload.single('image'), ecom.insert);
 router.get('/landingpage', ecom.landingpage);
 router.get('/addtocart', ecom.addtocart);
 router.post('/checkout', checkAuth, ecom.checkout);
+<<<<<<< Updated upstream
 router.get('/purchasehistory', ecom.purchasehistory);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+
+=======
+router.get('/purchasehistory', ecom.purchasehistory);
+>>>>>>> 92ee0e9ee2ec13c1d9eb7be708fbdafb20ba7a31
+=======
+router.get('/purchasehistory', ecom.purchasehistory);
+>>>>>>> 92ee0e9ee2ec13c1d9eb7be708fbdafb20ba7a31
+>>>>>>> Stashed changes
 /////////// ADMIN ROUTES //////////
 router.get('/index', isAdmin, ecom.index);
 router.get('/users', isAdmin, ecom.users);
