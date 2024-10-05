@@ -39,7 +39,7 @@ router.post('/insert', checkAuth, upload.single('image'), ecom.insert);
 router.get('/landingpage', ecom.landingpage);
 router.get('/addtocart', ecom.addtocart);
 router.post('/checkout', checkAuth, ecom.checkout);
-
+router.get('/purchasehistory', ecom.purchasehistory);
 /////////// ADMIN ROUTES //////////
 router.get('/index', isAdmin, ecom.index);
 router.get('/users', isAdmin, ecom.users);

@@ -1,0 +1,98 @@
+/* Custom CSS to remove borders and padding between columns */
+.table th, .table td {
+    border: none;
+    text-align: center;
+    padding: 0.75rem 0.5rem; /* Reduced padding to avoid column separation effect */
+}
+
+/* Remove separation between columns */
+.table td, .table th {
+    vertical-align: middle;
+}
+
+/* Image size and style */
+.table img {
+    width: 60px;
+    height: 60px;
+    background-color: #f0f0f0;
+    object-fit: cover; /* Ensure the image is responsive and fits in its cell */
+}
+
+/* Change the color to black for price fields */
+.text-danger {
+    color: black !important;
+}
+
+/* Purchase history container styling */
+.container {
+    margin-top: 40px;
+    padding-top: 20px;
+}
+
+/* General table styling */
+.table-hover tbody tr:hover {
+    background-color: #f7f7f7; /* Subtle hover effect */
+}
+
+/* Headings styling */
+h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* General button styling */
+.btn {
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+/* Specific button styling */
+.remove-btn {
+    background-color: #b61111;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+}
+
+.remove-btn:hover {
+    background-color: #3c3d37;
+    color: white;
+}
+
+
+/* Set the table to auto-distribute the width */
+.table {
+    table-layout: fixed; /* Ensures equal column widths */
+    width: 100%;
+}
+
+/* Equal column widths */
+.table th, .table td {
+    width: 16.67%; /* Each column will take up an equal share of the table width */
+    text-align: center; /* Center-align text in the cells */
+}
+
+/* Adjust text size for consistency */
+.table td span, .table th {
+    font-size: 0.9rem;
+}
+
+/* Custom CSS for Buy Again button */
+.buy-again-btn {
+    background-color: #3c3d37;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    transition: background-color 0.3s ease;
+}
+
+.buy-again-btn:hover {
+    background-color: #1e201e;
+    color: white;
+}

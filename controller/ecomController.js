@@ -88,6 +88,10 @@ const ecom = {
         });
     },
 
+    purchasehistory: (req, res) => {
+        res.render('purchasehistory');
+    },
+
 
     ///// SHOW PRODUCT TO UPDATE /////
     showUpdateForm: (req, res) => {
