@@ -7,36 +7,45 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/landingpage.css">
     <link rel="stylesheet" href="css/addtocart.css">
-    <title>Homepage</title>
-  </head>
-  <body>
+    <title>Shopping Cart</title>
+    <style>
+        /* Additional styles to change text-danger color to black */
+        .text-danger {
+            color: black !important; /* Change the color to black */
+        }
+    </style>
+</head>
+<body>
   
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg fixed-top" id="nav">
-          <div class="container-fluid">
-              <div class="d-flex justify-content-between">
-                  <button class="btn d-md-none d-block open-btn px-1 py-0">
-                      <i class="bi bi-list text-dark fs-1"></i>
-                  </button>
-                  <a class="navbar-brand" href="#">paltan mo</a>
-              </div>
-              <div>
-                  <a href="#" class="cart-icon">
-                      <i class="bi bi-cart4 fs-3 m-3"></i>
-                      <span id="cart-count" class="badge bg-danger">0</span>
-                  </a>
-                  <a href="#" class="me-4"><i class="bi bi-person-circle fs-3 m-1"></i></a>
-              </div>
-          </div>
-      </nav>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" id="nav">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between">
+                <button class="btn d-md-none d-block open-btn px-1 py-0">
+                    <i class="bi bi-list text-dark fs-1"></i>
+                </button>
+                <a class="navbar-brand text-dark" href="/landingpage">Homepage</a> 
+            </div>
+            <div>
+                <a href="#" class="cart-icon">
+                    <i class="bi bi-cart4 fs-3 text-dark m-3"></i> 
+                    <span id="cart-count" class="badge bg-danger">0</span>
+                </a>
+                <a href="#" class="me-4"><i class="bi bi-person-circle fs-3 text-dark m-1"></i></a> 
+                <a href="/logout" class="me-4"><i class="bi bi-box-arrow-right fs-3 text-dark"></i></a>
+            </div>
+        </div>
+    </nav>
   
-    <div class="container mt-5">
+    <div class="container mt-5 pt-5">
         <h2 class="text-center mb-4">Shopping Cart</h2>
         <form id="cart-form" method="POST" action="/checkout">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col"><input class="form-check-input" type="checkbox" id="select-all"></th>
+                        <th scope="col">
+                            <input class="form-check-input" type="checkbox" id="select-all">
+                        </th>
                         <th scope="col">Item</th>
                         <th scope="col">Price</th>
                         <th scope="col">Quantity</th>
@@ -44,24 +53,8 @@
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <% products.forEach(product => { %>
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox" name="productIds" value="<%= product.prodID %>"></td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="<%= product.filepath %>" alt="<%= product.prodname %>" class="me-3" style="width: 60px; height: 60px;">
-                                    <span><%= product.prodname %></span>
-                                </div>
-                            </td>
-                            <td class="text-danger">$<%= product.price.toFixed(2) %></td>
-                            <td>
-                                <input class="form-control" type="number" name="quantity" value="1" min="1" style="width: 70px;">
-                            </td>
-                            <td class="text-danger">$<%= product.price.toFixed(2) %></td>
-                            <td><button class="btn remove-btn" type="button">Remove</button></td>
-                        </tr>
-                    <% }); %>
+                <tbody id="cart-items">
+                    <!-- Cart items will be dynamically inserted here using JavaScript -->
                 </tbody>
             </table>
             <div class="d-flex justify-content-end">
@@ -73,36 +66,79 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Inline JavaScript for functionality
         document.addEventListener('DOMContentLoaded', function () {
-            const removeBtns = document.querySelectorAll('.remove-btn');
-            const quantityInputs = document.querySelectorAll('input[name="quantity"]');
-            const priceCells = document.querySelectorAll('td:nth-child(3)');
-            const totalCells = document.querySelectorAll('td:nth-child(5)');
-            const selectAllCheckbox = document.getElementById('select-all');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCountElement = document.getElementById('cart-count');
+            
+            // Update cart count
+            cartCountElement.textContent = cart.length;
+
+            // Function to render cart items
+            const renderCartItems = () => {
+                cartItemsContainer.innerHTML = '';  // Clear existing cart items
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<tr><td colspan="6" class="text-center">Your cart is empty.</td></tr>';
+                    return;
+                }
+
+                cart.forEach((product, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="productIds" value="${product.id}">
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="${product.image}" alt="${product.name}" class="me-3" style="width: 60px; height: 60px;">
+                                <span>${product.name}</span>
+                            </div>
+                        </td>
+                        <td class="text-danger">₱${product.price.toFixed(2)}</td>
+                        <td>
+                            <input class="form-control quantity-input" type="number" name="quantity" value="${product.quantity}" min="1" data-index="${index}" style="width: 70px;">
+                        </td>
+                        <td class="text-danger total-price">₱${(product.price * product.quantity).toFixed(2)}</td>
+                        <td>
+                            <button class="btn remove-btn" type="button" data-index="${index}">Remove</button>
+                        </td>
+                    `;
+                    cartItemsContainer.appendChild(row);
+                });
+            };
+
+            // Render cart items on page load
+            renderCartItems();
 
             // Update total price when quantity changes
-            quantityInputs.forEach((input, index) => {
-                input.addEventListener('input', function () {
-                    let price = parseFloat(priceCells[index].textContent.replace('$', ''));
-                    let quantity = input.value;
-                    totalCells[index].textContent = '$' + (price * quantity).toFixed(2);
-                });
+            cartItemsContainer.addEventListener('input', function (e) {
+                if (e.target.classList.contains('quantity-input')) {
+                    const index = e.target.getAttribute('data-index');
+                    const quantity = parseInt(e.target.value, 10);
+                    if (quantity > 0) {
+                        cart[index].quantity = quantity;
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCartItems();  // Re-render the cart
+                    }
+                }
             });
 
             // Remove product from cart
-            removeBtns.forEach((btn) => {
-                btn.addEventListener('click', function () {
-                    btn.closest('tr').remove();
-                });
+            cartItemsContainer.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-btn')) {
+                    const index = e.target.getAttribute('data-index');
+                    cart.splice(index, 1);  // Remove the product from the cart
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    cartCountElement.textContent = cart.length;
+                    renderCartItems();  // Re-render the cart
+                }
             });
 
             // Select all checkboxes
-            selectAllCheckbox.addEventListener('change', function () {
+            document.getElementById('select-all').addEventListener('change', function () {
                 const checkboxes = document.querySelectorAll('input[name="productIds"]');
-                checkboxes.forEach((checkbox) => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
+                checkboxes.forEach(checkbox => checkbox.checked = this.checked);
             });
         });
     </script>
