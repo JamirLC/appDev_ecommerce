@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="css/addtocart.css">
     <title>Shopping Cart</title>
     <style>
-        /* Additional styles to change text-danger color to black */
         .text-danger {
-            color: black !important; /* Change the color to black */
+            color: black !important;
         }
     </style>
 </head>
@@ -71,12 +70,10 @@
             const cartItemsContainer = document.getElementById('cart-items');
             const cartCountElement = document.getElementById('cart-count');
             
-            // Update cart count
             cartCountElement.textContent = cart.length;
 
-            // Function to render cart items
             const renderCartItems = () => {
-                cartItemsContainer.innerHTML = '';  // Clear existing cart items
+                cartItemsContainer.innerHTML = ''; 
 
                 if (cart.length === 0) {
                     cartItemsContainer.innerHTML = '<tr><td colspan="6" class="text-center">Your cart is empty.</td></tr>';
@@ -107,11 +104,9 @@
                     cartItemsContainer.appendChild(row);
                 });
             };
-
-            // Render cart items on page load
             renderCartItems();
 
-            // Update total price when quantity changes
+            // PRICE CALCULATOR
             cartItemsContainer.addEventListener('input', function (e) {
                 if (e.target.classList.contains('quantity-input')) {
                     const index = e.target.getAttribute('data-index');
@@ -119,23 +114,22 @@
                     if (quantity > 0) {
                         cart[index].quantity = quantity;
                         localStorage.setItem('cart', JSON.stringify(cart));
-                        renderCartItems();  // Re-render the cart
+                        renderCartItems(); // RENDER
                     }
                 }
             });
 
-            // Remove product from cart
+            // REMOVE FROM CART
             cartItemsContainer.addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-btn')) {
                     const index = e.target.getAttribute('data-index');
-                    cart.splice(index, 1);  // Remove the product from the cart
+                    cart.splice(index, 1);
                     localStorage.setItem('cart', JSON.stringify(cart));
                     cartCountElement.textContent = cart.length;
-                    renderCartItems();  // Re-render the cart
+                    renderCartItems(); // RENDER
                 }
             });
 
-            // Select all checkboxes
             document.getElementById('select-all').addEventListener('change', function () {
                 const checkboxes = document.querySelectorAll('input[name="productIds"]');
                 checkboxes.forEach(checkbox => checkbox.checked = this.checked);

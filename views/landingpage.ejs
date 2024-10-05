@@ -30,7 +30,7 @@
         <div class="container text-center">  <!-- Center the text and content -->
             <!----------------------Carousel-------------------------->
             <div class="carousel-container">
-                <!-- Carousel code can be added here if needed -->
+              <!-- ???? -->
             </div>
 
             <!----------------------Product Cards--------------------------> 
@@ -70,7 +70,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // Add to Cart Button Event Listener
+            // ADD TO CART
             const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
             addToCartButtons.forEach(button => {
                 button.addEventListener('click', function () {
@@ -79,11 +79,10 @@
                     const productPrice = parseFloat(button.getAttribute('data-price'));
                     const productImage = button.getAttribute('data-image');
 
-                    // Check if product already exists in cart
                     const existingProduct = cart.find(item => item.id === productId);
 
                     if (existingProduct) {
-                        existingProduct.quantity += 1; // Increase quantity if it already exists
+                        existingProduct.quantity += 1;
                     } else {
                         const newProduct = {
                             id: productId,
@@ -92,10 +91,10 @@
                             image: productImage,
                             quantity: 1
                         };
-                        cart.push(newProduct); // Add new product to cart
+                        cart.push(newProduct);
                     }
 
-                    localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart to localStorage
+                    localStorage.setItem('cart', JSON.stringify(cart));
                     alert(`${productName} has been added to your cart!`);
                 });
             });
