@@ -1,0 +1,106 @@
+:root {
+    --primary-color: #e63946; /* Deep Red */
+    --secondary-color: #f1faee; /* Light Blue-White */
+    --background-color: #a8dadc; /* Light Cyan */
+    --text-color: #1d3557; /* Dark Blue */
+    --subtext-color: #457b9d; /* Medium Blue */
+    --shadow-color: rgba(0, 0, 0, 0.15); /* Slightly Darker Shadow */
+    --shadow-hover-color: rgba(0, 0, 0, 0.25);
+    --font-size-base: 1rem;
+    --font-size-small: 0.9rem;
+    --spacing: 20px;
+    --border-radius: 12px;
+    --hover-scale: 1.03;
+    --transition-speed: 0.4s;
+    --primary-gradient: linear-gradient(135deg, #e63946, #f1faee); /* Red to Light Blue Gradient */
+}
+
+
+/* Styling the personal info card */
+.personal-info {
+    background: var(--background-color);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px var(--shadow-color);
+    margin-top: 50px;
+    transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+/* Add hover effect with scale and shadow animation */
+.personal-info:hover {
+    box-shadow: 0 8px 16px var(--shadow-hover-color);
+    transform: scale(var(--hover-scale));
+}
+
+/* Header styling with gradient text for a more modern feel */
+.personal-info__header {
+    font-weight: 600;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    color: transparent; /* Use gradient for text */
+    margin-bottom: var(--spacing);
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+}
+
+/* Info item styling with smooth animation for the icons */
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    transition: transform var(--transition-speed) ease;
+}
+
+/* Scale the info items on hover */
+.info-item:hover {
+    transform: scale(1.02);
+}
+
+/* Icon styling with a vibrant color and smooth transitions */
+.info-item__icon {
+    font-size: 1.75rem;
+    margin-right: 12px;
+    color: var(--secondary-color);
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+/* Slight bounce effect when hovering over icons */
+.info-item__icon:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* Text styling for info items */
+.info-item__text {
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    color: var(--text-color);
+    transition: color var(--transition-speed) ease;
+}
+
+/* Change text color slightly on hover for better interactivity */
+.info-item__text:hover {
+    color: var(--primary-color);
+}
+
+/* Subtext styling with light color */
+.info-item__text small {
+    font-size: var(--font-size-small);
+    color: var(--subtext-color);
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .personal-info {
+        padding: 15px;
+        margin-top: 30px;
+    }
+
+    .info-item__icon {
+        font-size: 1.5rem;
+    }
+
+    .info-item__text {
+        font-size: 0.95rem;
+    }
+}
