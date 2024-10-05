@@ -46,14 +46,15 @@ const information = {
         const query = "SELECT * FROM users WHERE email = ?";
         db.query(query, [email], callback);
     },
+    ///////////// SEARCH QUERIES /////
 
     ///// SEARCH PRODUCTS /////
     searchProducts: (searchTerm, limit, offset, callback) => {
         const query = `
             SELECT * FROM products 
             WHERE prodname LIKE ? 
-               OR description LIKE ?
-            ORDER BY prodname ASC
+               OR prodID LIKE ?
+            ORDER BY prodID ASC
             LIMIT ? OFFSET ?
         `;
         const likeTerm = `%${searchTerm}%`;
@@ -65,11 +66,34 @@ const information = {
         const query = `
             SELECT COUNT(*) AS count FROM products 
             WHERE prodname LIKE ? 
-               OR description LIKE ?
+               OR description LIKE ?`;
+        const likeTerm = `%${searchTerm}%`;
+        db.query(query, [likeTerm, likeTerm], callback);
+    },
+
+    ///// SEARCH USERS /////
+    searchUsers: (searchTerm, limit, offset, callback) => {
+        const query = `
+            SELECT * FROM users 
+            WHERE fname LIKE ? 
+               OR lname LIKE ?
+            ORDER BY userID ASC
+            LIMIT ? OFFSET ?
+        `;
+        const likeTerm = `%${searchTerm}%`;
+        db.query(query, [likeTerm, likeTerm, limit, offset], callback);
+    },
+
+    ///// COUNT SEARCH RESULTS FOR USERS /////
+    countSearchResults2: (searchTerm, callback) => {
+        const query = `
+            SELECT COUNT(*) AS count FROM users 
+            WHERE fname LIKE ? 
+               OR lname LIKE ?
         `;
         const likeTerm = `%${searchTerm}%`;
         db.query(query, [likeTerm, likeTerm], callback);
-    }
+    },
 };
 
 module.exports = information;

@@ -43,7 +43,24 @@ const ecom = {
     users: (req, res) => {
         information.getallusers((err, results) => {
             if (err) throw err;
-            res.render('users', { information: results, user: req.session.user });
+
+
+            const limit = 10;
+            const page = parseInt(req.query.page) || 1;
+            const totalResults = results.length;
+            const totalPages = Math.ceil(totalResults / limit);
+            const offset = (page - 1) * limit;
+
+            const paginatedResults = results.slice(offset, offset + limit);
+
+            res.render('users', {
+                information: paginatedResults,
+                user: req.session.user,
+                message: null,
+                currentPage: page,
+                totalPages: totalPages,
+                searchTerm: ''
+            });
         });
     },
 
@@ -276,11 +293,62 @@ const ecom = {
         });
     },
 
+    search2: (req, res) => {
+        const searchTerm = req.query.query ? req.query.query.trim() : '';
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10;
+        const offset = (page - 1) * limit;
+
+        if (!searchTerm) {
+            return res.redirect('/index');
+        }
+
+
+        information.searchUsers(searchTerm, limit, offset, (err, results) => {
+            if (err) {
+                console.error('Error during search:', err);
+                return res.status(500).send('Server Error');
+            }
+
+            information.countSearchResults2(searchTerm, (countErr, countResult) => {
+                if (countErr) {
+                    console.error('Error counting search results:', countErr);
+                    return res.status(500).send('Server Error');
+                }
+
+                const totalResults = countResult[0].count;
+                const totalPages = Math.ceil(totalResults / limit);
+
+                res.render('users', {
+                    information: results,
+                    user: req.session.user,
+                    message: results.length === 0 ? 'No Users found matching your search.' : null,
+                    currentPage: page,
+                    totalPages: totalPages,
+                    searchTerm: searchTerm
+                });
+            });
+        });
+    },
+
     ///// LOGOUT /////
     logoutUser: (req, res) => {
         req.session.destroy(() => {
             res.redirect('/login');
         });
+    },
+
+    addtocart: (req, res) => {
+        information.getallproducts((err, products) => {
+            if (err) throw err;
+            res.render('addtocart', { products: products });
+        });
+    },
+    
+    checkout: (req, res) => {
+        const { productIds, quantities } = req.body; // Assuming you use arrays to capture these
+        // Logic to handle the checkout process, e.g., calculate totals, save to the database, etc.
+        res.redirect('/checkout-success'); // Redirect to a success page after processing
     }
 };
 

@@ -55,7 +55,7 @@
 
                     <!-- Display Feedback Message -->
                     <% if (message) { %>
-                        <div class="alert alert-info" role="alert">
+                        <div class="alert alert-danger" role="alert">
                             <%= message %>
                         </div>
                     <% } %>
@@ -64,7 +64,6 @@
                         <button class="btn d-md-none d-block open-btn px-1 py-0">
                             <i class="bi bi-list text-dark fs-1"></i>
                         </button>
-                        <!-- Search Form in the navbar -->
                         <form class="d-flex ms-auto" action="/search" method="GET">
                             <input class="form-control me-2" type="search" name="query" placeholder="Search products" aria-label="Search" required />
                             <button class="btn btn-outline-success" type="submit">Search</button>
