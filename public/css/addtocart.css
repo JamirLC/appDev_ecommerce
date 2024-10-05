@@ -45,3 +45,13 @@
     background-color: #1e201e;
     color: white;
 }
+
+.cart-icon {
+    display: inline-block; /* Ensures the container size fits the icon */
+    
+}
+
+#cart-count {
+    top: 0px; /* Adjust this value to move the badge up */
+    right: 5px; /* Adjust this value to move the badge to the left */
+}

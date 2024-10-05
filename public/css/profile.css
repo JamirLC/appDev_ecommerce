@@ -16,6 +16,7 @@
 }
 
 
+
 /* Styling the personal info card */
 .personal-info {
     background: var(--background-color);
@@ -103,4 +104,8 @@
     .info-item__text {
         font-size: 0.95rem;
     }
+}
+
+.cont{
+    margin-top: 100px !important;
 }

@@ -6,13 +6,18 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+      <link rel="stylesheet" href="css/all.css">
+      <link rel="stylesheet" href="css/loginreg.css">
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <h2 class="mb-4">Login</h2>
-        <form action="/login" method="POST" class="p-4 bg-white shadow-sm rounded">
+<body>
+    <div class="container mt-5 d-flex align-items-center flex-column">
+        <form action="/login" method="POST" class="p-4 shadow-sm rounded">
+            <div class="d-flex align-items-center flex-column mb-5">
+                <h1 class="">Login</h1>
+                <h6 class="">Welcome to Back</h6>
+            </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label">Email:</label>
                 <input
                     type="email"
                     class="form-control"
@@ -23,7 +28,7 @@
                 />
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">Password:</label>
                 <div class="input-group">
                     <input
                         type="password"
@@ -39,9 +44,10 @@
                     </button>
                 </div>
             </div>
-            <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary">Login</button>
-                <a href="/register" class="btn btn-secondary">Register</a>
+            <div class="d-flex align-items-center flex-column">
+                <button type="submit" class="btn btn-success w-100">Login</button>
+                <br>
+                <a href="/register" class="fs-6">Do not have an account? Register</a>
             </div>
         </form>
     </div>

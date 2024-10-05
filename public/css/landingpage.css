@@ -1,8 +1,3 @@
-/* General Styling */
-body {
-    background-color: ECDFCC;
-    font-family: 'Arial', sans-serif;
-}
 
 /* Navbar Styling */
 #nav {
@@ -61,7 +56,7 @@ body {
 
 /* Add to Cart Button Styling */
 .add-to-cart-btn {
-    background-color: #3c3d37; /* Dark gray from the palette */
+    background-color: #343434; /* Dark gray from the palette */
     color: #ffffff;
     border-radius: 8px;
     padding: 10px 10px;
@@ -76,17 +71,13 @@ body {
 
 /* Buy Button Styling */
 .buy-btn {
-    background-color: #697565; /* Olive green from the palette */
+ /* Olive green from the palette */
     color: #ffffff;
     border-radius: 8px;
     padding: 10px 10px;
     border: none;
     transition: 0.3s;
     cursor: pointer;
-}
-
-.buy-btn:hover {
-    background-color: #3c3d37; /* Dark gray on hover for contrast */
 }
 
 
@@ -176,6 +167,7 @@ body {
 .carousel-inner {
     border: 1px solid;
     border-radius: 10px;
+    padding: 0px;
 }
 
 .carousel-caption p {
@@ -210,4 +202,8 @@ body {
     .carousel-caption p {
         font-size: 10px;
     }
+}
+
+.container{
+    margin-top: 50px;
 }

@@ -1,0 +1,18 @@
+body {
+    /* background-image: url('../img/Krusada.png');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;  
+    background-attachment: fixed;  */
+}
+
+form{
+    background-color: #ffffff;
+    width: 35vw !important;
+}
+
+input:focus {
+    outline: none !important;                  /* Removes the default outline */
+    border-color: #ced4da !important;          /* Sets border color to Bootstrap default gray */
+    box-shadow: none !important;                /* Removes the blue shadow */
+}
