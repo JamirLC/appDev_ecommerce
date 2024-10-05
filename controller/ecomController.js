@@ -16,7 +16,9 @@ const ecom = {
     addtocart: (req, res) => {
         res.render('addtocart');
     },
-   
+    profile: (req, res) => {
+        res.render('profile');
+    },
     index: (req, res) => {
         information.getallproducts((err, results) => {
             if (err) throw err;

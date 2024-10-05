@@ -45,6 +45,7 @@ router.get('/purchasehistory', ecom.purchasehistory);
 <<<<<<< HEAD
 <<<<<<< HEAD
 
+router.get('/profile', ecom.profile);
 
 =======
 router.get('/purchasehistory', ecom.purchasehistory);
